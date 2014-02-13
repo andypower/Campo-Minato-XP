@@ -1,4 +1,4 @@
 Campo-Minato-XP
 ===============
 
-Educational game mines in Java
+Educational mines game in Java Swing
