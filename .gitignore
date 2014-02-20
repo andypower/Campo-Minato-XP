@@ -1,2 +1,5 @@
 /target/
 /ant lib/nbproject/private/
+/build/
+/.gradle/
+/.nb-gradle/
