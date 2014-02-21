@@ -10,20 +10,17 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
 public class DAORecord {
-    
-    private static Log logger = LogFactory.getLog(DAORecord.class); 
-    private static String tempDir = System.getProperty("java.io.tmpdir");
-    private final static String NOMEFILE = tempDir + "recordCampoMinato.xml";
-    
+
+    private static Log logger = LogFactory.getLog(DAORecord.class);
+
     public static List<Livello> caricaLivelliRecord(String nomeFile) throws DAOException {
         org.w3c.dom.Document document = costruisciDOM(nomeFile);
         List<Livello> livelliRecord = new ArrayList<Livello>();
         analizzaRadice(document, livelliRecord);
         return livelliRecord;
     }
-    
+
     private static org.w3c.dom.Document costruisciDOM(String nomeFile) throws DAOException {
         org.w3c.dom.Document document = null;
         javax.xml.parsers.DocumentBuilderFactory factory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
@@ -48,12 +45,12 @@ public class DAORecord {
         }
         return document;
     }
-    
+
     private static void analizzaRadice(org.w3c.dom.Document document, List<Livello> livelliRecord) {
         org.w3c.dom.Element radice = document.getDocumentElement();
         org.w3c.dom.NodeList listaLivelli = document.getElementsByTagName("listaLivelli");
         for (int i = 0; i < listaLivelli.getLength(); i++) {
-            org.w3c.dom.Element livelloRecord = (org.w3c.dom.Element)listaLivelli.item(i);
+            org.w3c.dom.Element livelloRecord = (org.w3c.dom.Element) listaLivelli.item(i);
             String difficoltaLivello = livelloRecord.getAttribute("difficoltaLivello");
             Livello livelloEstratto = DAORecord.creaLivello(difficoltaLivello);
             if (livelloEstratto != null) {
@@ -63,13 +60,13 @@ public class DAORecord {
             }
         }
     }
-    
+
     private static void riempiLivello(Livello livello, NodeList listaRecord) {
         for (int i = 0; i < listaRecord.getLength(); i++) {
-            org.w3c.dom.Element singoloRecord = (org.w3c.dom.Element)listaRecord.item(i);
+            org.w3c.dom.Element singoloRecord = (org.w3c.dom.Element) listaRecord.item(i);
             String secondi = (singoloRecord.getAttribute("secondi")).trim();
             String nomeGiocatore = (singoloRecord.getAttribute("nomeGiocatore")).trim();
-            String numColonne  = (singoloRecord.getAttribute("numColonne")).trim();
+            String numColonne = (singoloRecord.getAttribute("numColonne")).trim();
             String numRighe = (singoloRecord.getAttribute("numRighe")).trim();
             String numMine = (singoloRecord.getAttribute("numMine")).trim();
             try {
@@ -84,11 +81,11 @@ public class DAORecord {
             }
         }
     }
-    
+
     private static Livello creaLivello(String difficoltaLivello) {
         Livello livello = null;
         String stringaDifficoltaLivello = difficoltaLivello.trim();
-        if(stringaDifficoltaLivello.equalsIgnoreCase("Livello Base")) {
+        if (stringaDifficoltaLivello.equalsIgnoreCase("Livello Base")) {
             livello = new Livello("Livello Base");
         } else if (stringaDifficoltaLivello.equalsIgnoreCase("Livello Intermedio")) {
             livello = new Livello("Livello Intermedio");
@@ -99,18 +96,18 @@ public class DAORecord {
         }
         return livello;
     }
-    
+
     private static org.w3c.dom.Element getFirstChildByName(org.w3c.dom.Element elemento, String nome) {
         org.w3c.dom.NodeList figli = elemento.getChildNodes();
         for (int i = 0; i < figli.getLength(); i++) {
             org.w3c.dom.Node figlio = figli.item(i);
             if (figlio.getNodeName().equals(nome)) {
-                return (org.w3c.dom.Element)figlio;
+                return (org.w3c.dom.Element) figlio;
             }
         }
         return null;
     }
-    
+
     // Salvataggio
     public static void salvaRecords(List<Livello> listaRecord) throws DAOException {
         if (listaRecord == null) {
@@ -118,10 +115,10 @@ public class DAORecord {
         }
         org.w3c.dom.Document document = creaDocumento();
         aggiungiListaRecord(listaRecord, document);
-        salvaDOM(document, NOMEFILE);
-        DAOUtilita.copiaDTD(tempDir);
+        salvaDOM(document, DAOUtilita.getPathRecordXMLFile());
+        DAOUtilita.copiaDTD(DAOUtilita.getTempDir());
     }
-    
+
     private static org.w3c.dom.Document creaDocumento() throws DAOException {
         org.w3c.dom.Document document = null;
         javax.xml.parsers.DocumentBuilderFactory factory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
@@ -129,7 +126,7 @@ public class DAORecord {
         try {
             javax.xml.parsers.DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.newDocument();
-            org.w3c.dom.Element radice = (org.w3c.dom.Element)document.createElement("records");
+            org.w3c.dom.Element radice = (org.w3c.dom.Element) document.createElement("records");
             document.appendChild(radice);
         } catch (javax.xml.parsers.ParserConfigurationException pce) {
             System.err.println(pce);
@@ -140,7 +137,7 @@ public class DAORecord {
         }
         return document;
     }
-    
+
     private static void aggiungiListaRecord(List<Livello> listaRecord, org.w3c.dom.Document document) {
         org.w3c.dom.Element radice = document.getDocumentElement();
         for (int i = 0; i < listaRecord.size(); i++) {
@@ -152,7 +149,7 @@ public class DAORecord {
             radice.appendChild(elementoListaRecord);
         }
     }
-    
+
     private static void aggiungiRecord(Livello livelloRecord, Element elementoListaRecord,
             org.w3c.dom.Document document) {
         List<Tempo> listaTempi = livelloRecord.getListaTempi();
@@ -176,8 +173,7 @@ public class DAORecord {
             elementoListaRecord.appendChild(record);
         }
     }
-    
-    
+
     private static void salvaDOM(org.w3c.dom.Document document, String nomeFile) throws DAOException {
         try {
             java.io.File file = new java.io.File(nomeFile);
@@ -186,7 +182,7 @@ public class DAORecord {
             transformer.setOutputProperty("indent", "yes");
             transformer.setOutputProperty(javax.xml.transform.OutputKeys.DOCTYPE_SYSTEM, "records.dtd");
             javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(document);
-            javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(file);
+            javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(file.getPath());
             transformer.transform(source, result);
         } catch (javax.xml.transform.TransformerConfigurationException tce) {
             System.err.println(tce);
@@ -196,5 +192,5 @@ public class DAORecord {
             throw new DAOException(te);
         }
     }
-    
+
 }
