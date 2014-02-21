@@ -3,6 +3,7 @@ package it.unibas.campominato.persistenza;
 import it.unibas.campominato.modello.Livello;
 import it.unibas.campominato.modello.LivelloPersonalizzato;
 import it.unibas.campominato.modello.Tempo;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
@@ -13,8 +14,18 @@ import org.w3c.dom.NodeList;
 public class DAORecord {
 
     private static Log logger = LogFactory.getLog(DAORecord.class);
-    private static String tempDir = System.getProperty("java.io.tmpdir");
-    private final static String NOMEFILE = tempDir + "recordCampoMinato.xml";
+    private static String tempDir;
+
+    static {
+        tempDir = System.getProperty("java.io.tmpdir");
+        if (!tempDir.endsWith(File.separator)) {
+            tempDir += File.separator;
+        }
+    }
+    
+    private static String getNomeFile(){
+        return tempDir + "recordCampoMinato.xml";
+    }
 
     public static List<Livello> caricaLivelliRecord(String nomeFile) throws DAOException {
         org.w3c.dom.Document document = costruisciDOM(nomeFile);
@@ -117,7 +128,7 @@ public class DAORecord {
         }
         org.w3c.dom.Document document = creaDocumento();
         aggiungiListaRecord(listaRecord, document);
-        salvaDOM(document, NOMEFILE);
+        salvaDOM(document, getNomeFile());
         DAOUtilita.copiaDTD(tempDir);
     }
 
