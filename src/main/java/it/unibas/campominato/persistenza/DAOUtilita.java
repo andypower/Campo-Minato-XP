@@ -1,5 +1,7 @@
 package it.unibas.campominato.persistenza;
 
+import java.io.File;
+
 public class DAOUtilita {
         
     // ***********************
@@ -7,6 +9,23 @@ public class DAOUtilita {
     // ***********************
         
     private static final String DTD = "records.dtd";
+
+    private static String tempDir;
+
+    static {
+        tempDir = System.getProperty("java.io.tmpdir");
+        if (!tempDir.endsWith(File.separator)) {
+            tempDir += File.separator;
+        }
+    }
+
+    public static String getPathRecordXMLFile() {
+        return tempDir + "recordCampoMinato.xml";
+    }
+
+    public static String getTempDir() {
+        return tempDir;
+    }
 
     public static void copiaDTD(String percorso) throws DAOException {
         try {
