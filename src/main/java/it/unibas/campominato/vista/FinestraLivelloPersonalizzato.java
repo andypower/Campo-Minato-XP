@@ -46,7 +46,7 @@ public class FinestraLivelloPersonalizzato extends FinestraDiDialogoPing {
                 ConvalidatoreNumeroIntero convalidatoreRighe = new ConvalidatoreNumeroIntero("numeroRighe", 2, 24);
                 ConvalidatoreNumeroIntero convalidatoreColonne = new ConvalidatoreNumeroIntero("numeroColonne", 2, 30);
                 ConvalidatoreNumeroIntero convalidatoreMine = new ConvalidatoreNumeroIntero("numeroMine", 1, 667);
-                List errori = new ArrayList();
+                List<String> errori = new ArrayList<String>();
                 if (!convalidatoreColonne.convalida(numColonne).isEmpty()) {
                     errori.add("Errore nel campo delle Colonne");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Cosa pensavi di fare???"));
