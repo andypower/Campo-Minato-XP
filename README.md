@@ -11,3 +11,5 @@ After this operation is possible to launch a build: mvn clean install
 At the end execute from target dir: .\target>java -jar campominato-1.0-SNAPSHOT.jar
 
 Enjoy it!
+
+![alt tag](https://lh5.googleusercontent.com/-IZgpks0nFx4/UwadVWQvNJI/AAAAAAAABPk/XyUzB2AC_IM/w500-h480-no/splashScreen.jpg)
