@@ -32,7 +32,7 @@ public class Record {
 
     public static List getRecords() {
         BufferedReader file = null;
-        List livelliRecord = null;
+        List<Livello> livelliRecord = null;
         try {
             file = new BufferedReader(new FileReader(
                     DAOUtilita.getPathRecordXMLFile()));
@@ -75,7 +75,7 @@ public class Record {
         Integer valoreLivello = (Integer) modello.getBean("livello");
         if (valoreLivello != null) {
             Tempo tempo = fabbricaTempo(nomeGiocatore);
-            List<Livello> listaRecord = (List) modello.getBean("records");
+            List<Livello> listaRecord = (List<Livello>) modello.getBean("records");
             switch (valoreLivello) {
                 case 0:
                     for (Livello livelloIesimo : listaRecord) {
