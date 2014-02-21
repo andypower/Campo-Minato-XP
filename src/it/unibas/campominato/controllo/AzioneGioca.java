@@ -65,7 +65,7 @@ public class AzioneGioca extends AzionePingAstratta{
             this.fermaTempo();
             scacchiera.scopriMineAllaFine();
             this.modello.putBean(Controllo.STATO, new StatoPing(Costanti.STATO_MINA_TROVATA));
-            this.modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Peccato, la mina è esplosa!!!"));
+            this.modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Peccato, la mina e' esplosa!!!"));
             this.clipAudio.close();
             Utilita.riproduciFileAudio("explo.wav", clipAudio);
             modello.putBean("giocoFinito", false);

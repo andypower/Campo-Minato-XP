@@ -43,20 +43,20 @@ public class FinestraLivelloPersonalizzato extends FinestraDiDialogoPing{
                 ConvalidatoreNumeroIntero convalidatoreRighe = new ConvalidatoreNumeroIntero("numeroRighe", 2, 24);
                 ConvalidatoreNumeroIntero convalidatoreColonne = new ConvalidatoreNumeroIntero("numeroColonne", 2, 30);
                 ConvalidatoreNumeroIntero convalidatoreMine = new ConvalidatoreNumeroIntero("numeroMine", 1, 667);
-                List errori = new ArrayList();
-                if (convalidatoreColonne.convalida(numColonne).size() != 0) {
+                List<String> errori = new ArrayList<String>();
+                if (!convalidatoreColonne.convalida(numColonne).isEmpty()) {
                     errori.add("Errore nel campo delle Colonne");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Cosa pensavi di fare???"));
                 }
-                if (convalidatoreRighe.convalida(numRighe).size() != 0) {
+                if (!convalidatoreRighe.convalida(numRighe).isEmpty()) {
                     errori.add("Errore nel campo delle Righe");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Fare le cose per bene no???"));
                 }
-                if (convalidatoreMine.convalida(numMine).size() != 0) {
+                if (!convalidatoreMine.convalida(numMine).isEmpty()) {
                     errori.add("Errore nel campo delle Mine");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Le mine potrebbero esplodere!!!"));
                 }
-                if (errori.size() == 0) {
+                if (errori.isEmpty()) {
                     int numeroColonne = convalidatoreColonne.converti(numColonne);
                     int numeroRighe = convalidatoreRighe.converti(numRighe);
                     int numeroMine = convalidatoreMine.converti(numMine);
@@ -64,7 +64,7 @@ public class FinestraLivelloPersonalizzato extends FinestraDiDialogoPing{
                     if (totCelle < numeroMine) {
                         errori.add("Numero di mine eccessivo rispetto alle righe e colonne fornite");
                         errori.add("Rispettare le regole del livello Personalizzato");
-                        modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Non è che in fondo in fondo ti senti un kamikaze?"));
+                        modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Non e' che in fondo in fondo ti senti un kamikaze?"));
                     }
                 }
                 return errori;
