@@ -59,11 +59,12 @@ public class FinestraNuovoRecord extends FinestraDiDialogoPing{
     
     private void creaForm() {
         IConvalidatoreForm campoNome = new IConvalidatoreForm() {
+            @Override
             public List convalida(IForm iForm) {
                 String nomeGiocatore = (String)vista.getValore("campoNome");
                 ConvalidatoreStringaNonNulla convalidatore = new ConvalidatoreStringaNonNulla("campoNome");
-                List errori = new ArrayList();
-                if (convalidatore.convalida(nomeGiocatore).size() != 0) {
+                List<String> errori = new ArrayList<String>();
+                if (!convalidatore.convalida(nomeGiocatore).isEmpty()) {
                     errori.add("Il nome deve essere inserito!");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Hai il coraggio di inserire il tuo nome?"));
                 }
@@ -88,8 +89,8 @@ public class FinestraNuovoRecord extends FinestraDiDialogoPing{
             public List convalida(IForm iForm) {
                 String nomeGiocatore = (String)vista.getValore("campoNome");
                 ConvalidatoreStringaNonNulla convalidatore = new ConvalidatoreStringaNonNulla("campoNome");
-                List errori = new ArrayList();
-                if (convalidatore.convalida(nomeGiocatore).size() != 0) {
+                List<String> errori = new ArrayList<String>();
+                if (!convalidatore.convalida(nomeGiocatore).isEmpty()) {
                     errori.add("Il nome deve essere inserito!");
                     modello.putBean(Controllo.MESSAGGIO_STATO, new MessaggioPing("Hai il coraggio di inserire il tuo nome?"));
                 }
@@ -111,7 +112,7 @@ public class FinestraNuovoRecord extends FinestraDiDialogoPing{
         boolean easterEgg = false;
         long secondi = (Long)this.getModello().getBean("secondi");
         Object obj = this.getModello().getBean("records");
-        List<Livello> listaRecord = (List)obj;
+        List<Livello> listaRecord = (List<Livello>)obj;
         Integer valoreLivello = (Integer)this.getModello().getBean("livello");
         if (valoreLivello != null) {
             switch(valoreLivello) {

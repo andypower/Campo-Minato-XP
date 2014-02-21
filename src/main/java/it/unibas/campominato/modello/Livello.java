@@ -39,6 +39,6 @@ public class Livello {
     }
 
     public void ordinaTempi() {
-        Collections.sort(this.listaTempi);
+        Collections.<Tempo>sort(this.listaTempi);
     }
 }

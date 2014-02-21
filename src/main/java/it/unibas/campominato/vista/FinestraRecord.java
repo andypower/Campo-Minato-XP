@@ -33,7 +33,7 @@ public class FinestraRecord extends FinestraDiDialogoPing{
 //        this.contenitore.removeAll();
 //        this.contenitore.add(this.legenda);
         Object obj = this.getModello().getBean("records");
-        List<Livello> listaRecord = (List)obj;
+        List<Livello> listaRecord = (List<Livello>)obj;
         for (Livello livelloIesimo : listaRecord) {
             costruisciLivello(livelloIesimo);
         }
